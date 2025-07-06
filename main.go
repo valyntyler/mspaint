@@ -6,6 +6,24 @@ import (
 	"github.com/gdamore/tcell/v2"
 )
 
+type matrix [][]uint
+
+func draw(screen tcell.Screen, style tcell.Style) {
+	xmax, ymax := screen.Size()
+
+	width := 80
+	height := 16
+
+	for x := range width {
+		for y := range height {
+			xnew := xmax/2 - width + x*2
+			ynew := ymax/2 - height/2 + y
+
+			screen.SetContent(xnew, ynew, '.', nil, style)
+		}
+	}
+}
+
 func main() {
 	defStyle := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(tcell.ColorReset)
 
@@ -46,6 +64,7 @@ func main() {
 	for {
 		// Update screen
 		s.Show()
+		draw(s, defStyle)
 
 		// Poll and process event
 		switch ev := s.PollEvent().(type) {
@@ -60,11 +79,11 @@ func main() {
 				s.Clear()
 			}
 		case *tcell.EventMouse:
-			x, y := ev.Position()
+			// x, y := ev.Position()
 
 			switch ev.Buttons() {
 			case tcell.Button1, tcell.Button2:
-				s.SetContent(x, y, 'x', nil, defStyle)
+				// s.SetContent(x, y, 'x', nil, defStyle)
 			}
 		}
 	}
