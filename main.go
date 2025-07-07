@@ -1,30 +1,54 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/gdamore/tcell/v2"
 )
 
-type matrix [][]uint
+type matrix [][]rune
 
-func draw(screen tcell.Screen, style tcell.Style) {
+func (m matrix) width() int {
+	return len(m[0])
+}
+
+func (m matrix) height() int {
+	return len(m)
+}
+
+func (m matrix) draw(screen tcell.Screen, style tcell.Style) {
 	xmax, ymax := screen.Size()
 
-	width := 80
-	height := 16
+	for x := range m.width() {
+		for y := range m.height() {
+			xnew := xmax/2 - m.width() + x*2
+			ynew := ymax/2 - m.height()/2 + y
 
-	for x := range width {
-		for y := range height {
-			xnew := xmax/2 - width + x*2
-			ynew := ymax/2 - height/2 + y
-
-			screen.SetContent(xnew, ynew, '.', nil, style)
+			screen.SetContent(xnew, ynew, m[y][x], nil, style)
 		}
 	}
 }
 
 func main() {
+	var data [][]rune = [][]rune{
+		{'a', 'b', 'c'},
+		{'d', 'e', 'f'},
+	}
+
+	var m matrix = matrix(data)
+	fmt.Println(m)
+
+	//
+	//
+	//
+
+	// return
+
+	//
+	//
+	//
+
 	defStyle := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(tcell.ColorReset)
 
 	s, err := tcell.NewScreen()
@@ -64,7 +88,7 @@ func main() {
 	for {
 		// Update screen
 		s.Show()
-		draw(s, defStyle)
+		m.draw(s, defStyle)
 
 		// Poll and process event
 		switch ev := s.PollEvent().(type) {
