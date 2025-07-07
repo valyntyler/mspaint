@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	m := newMatrix(80, 20, '#')
+	m := newMatrix(24, 24, '.')
 
 	defStyle := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(tcell.ColorReset)
 
@@ -63,11 +63,12 @@ func main() {
 				s.Clear()
 			}
 		case *tcell.EventMouse:
-			// x, y := ev.Position()
+			xscreen, yscreen := ev.Position()
+			x, y := m.screenToMatrix(s, xscreen, yscreen)
 
 			switch ev.Buttons() {
 			case tcell.Button1, tcell.Button2:
-				// s.SetContent(x, y, 'x', nil, defStyle)
+				m.setCell(x, y, 'x')
 			}
 		}
 	}
