@@ -19,6 +19,15 @@ func newMatrix(width, height int, fill rune) matrix {
 	return m
 }
 
+func (m matrix) screenToMatrix(screen tcell.Screen, x, y int) (int, int) {
+	_, ymax := screen.Size()
+
+	xnew := x/2 - ymax/2 - m.width()/2
+	ynew := y - ymax/2 + m.height()/2
+
+	return xnew, ynew
+}
+
 func (m matrix) getCell(x, y int) rune {
 	return m[y][x]
 }
