@@ -24,6 +24,10 @@ func (m matrix) getCell(x, y int) rune {
 }
 
 func (m matrix) setCell(x, y int, value rune) {
+	if y < 0 || x < 0 || y >= len(m) || x >= len(m[0]) {
+		return
+	}
+
 	m[y][x] = value
 }
 
