@@ -1,30 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/gdamore/tcell/v2"
 )
 
 func main() {
-	var data [][]rune = [][]rune{
-		{'a', 'b', 'c'},
-		{'d', 'e', 'f'},
-	}
-
-	var m matrix = matrix(data)
-	fmt.Println(m)
-
-	//
-	//
-	//
-
-	// return
-
-	//
-	//
-	//
+	m := newMatrix(80, 20, '#')
 
 	defStyle := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(tcell.ColorReset)
 

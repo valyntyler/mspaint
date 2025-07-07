@@ -6,6 +6,19 @@ import (
 
 type matrix [][]rune
 
+func newMatrix(width, height int, fill rune) matrix {
+	m := make(matrix, height)
+	for i := range m {
+		m[i] = make([]rune, width)
+	}
+	for i, row := range m {
+		for j := range row {
+			m[i][j] = fill
+		}
+	}
+	return m
+}
+
 func (m matrix) width() int {
 	return len(m[0])
 }
