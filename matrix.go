@@ -19,6 +19,14 @@ func newMatrix(width, height int, fill rune) matrix {
 	return m
 }
 
+func (m matrix) getCell(x, y int) rune {
+	return m[y][x]
+}
+
+func (m matrix) setCell(x, y int, value rune) {
+	m[y][x] = value
+}
+
 func (m matrix) width() int {
 	return len(m[0])
 }
