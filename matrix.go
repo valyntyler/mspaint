@@ -28,12 +28,20 @@ func (m matrix) screenToMatrix(screen tcell.Screen, x, y int) (int, int) {
 	return xnew, ynew
 }
 
+func (m matrix) isInside(x, y int) bool {
+	return !(y < 0 || x < 0 || y >= len(m) || x >= len(m[0]))
+}
+
 func (m matrix) getCell(x, y int) rune {
-	return m[y][x]
+	if m.isInside(x, y) {
+		return m[y][x]
+	} else {
+		return ' '
+	}
 }
 
 func (m matrix) setCell(x, y int, value rune) {
-	if y < 0 || x < 0 || y >= len(m) || x >= len(m[0]) {
+	if !m.isInside(x, y) {
 		return
 	}
 

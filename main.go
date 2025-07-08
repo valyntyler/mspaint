@@ -2,9 +2,23 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/gdamore/tcell/v2"
 )
+
+func recurse(m matrix, screen tcell.Screen, style tcell.Style, x, y int) {
+	if m.getCell(x, y) == '.' {
+		m.setCell(x, y, '*')
+		m.draw(screen, style)
+		screen.Show()
+		time.Sleep(20 * time.Millisecond)
+		recurse(m, screen, style, x, y+1)
+		recurse(m, screen, style, x, y-1)
+		recurse(m, screen, style, x+1, y)
+		recurse(m, screen, style, x-1, y)
+	}
+}
 
 func main() {
 	m := newMatrix(24, 24, '.')
@@ -43,6 +57,8 @@ func main() {
 	// queue is LIFO, it has a limited length, and PostEvent() can
 	// return an error.
 	// s.PostEvent(tcell.NewEventKey(tcell.KeyRune, rune('a'), 0))
+
+	recurse(m, s, defStyle, m.width()/2, m.height()/2)
 
 	// Event loop
 	for {
